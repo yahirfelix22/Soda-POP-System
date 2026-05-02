@@ -5,7 +5,7 @@ Para que el sistema Soda POP (SajaOS) funcione correctamente con la música y el
 
 1. Localiza estas líneas al inicio del script: `RUTA_MUSICA = ...` `RUTA_FONDO = ...`
 
-2. Cámbialas por estas rutas exactas: 
+2. C��mbialas por estas rutas exactas, por las tuyas según sea tu ruta: 
 - `RUTA_MUSICA = r"C:\Users\yahir balderrama\Contacts\Downloads\music.mp3\_Soda Pop_ Official Lyric Video _ KPop Demon Hunters _ Sony Animation [983bBbJx0Mk].wav"` 
 - `RUTA_FONDO = r"C:\Users\yahir balderrama\Contacts\Downloads\music.mp3\[suspicious link removed]-650@5@f.jpg"`
 
