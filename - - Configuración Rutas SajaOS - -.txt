@@ -1,0 +1,12 @@
+- - Configuración Rutas SajaOS - -
+
+Instrucciones para configurar Rutas Multimedia
+Para que el sistema Soda POP (SajaOS) funcione correctamente con la música y el fondo de pantalla en tu computadora, debes actualizar las siguientes líneas en tu código:
+
+1. Localiza estas líneas al inicio del script: `RUTA_MUSICA = ...` `RUTA_FONDO = ...`
+
+2. Cámbialas por estas rutas exactas: 
+- `RUTA_MUSICA = r"C:\Users\yahir balderrama\Contacts\Downloads\music.mp3\_Soda Pop_ Official Lyric Video _ KPop Demon Hunters _ Sony Animation [983bBbJx0Mk].wav"` 
+- `RUTA_FONDO = r"C:\Users\yahir balderrama\Contacts\Downloads\music.mp3\[suspicious link removed]-650@5@f.jpg"`
+
+Nota importante: La letra `r` antes de las comillas es necesaria para que Python lea correctamente las barras invertidas (`\`) de Windows.
