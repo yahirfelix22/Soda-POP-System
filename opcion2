@@ -1,0 +1,122 @@
+import time
+import random
+import threading
+import pygame
+from collections import deque
+from PIL import Image, ImageTk
+import customtkinter as ctk
+
+# --- CONFIGURACIÓN DE RUTAS ---
+# Asegúrate de que estas rutas sean correctas en tu PC
+RUTA_MUSICA = r"C:\Users\yahir balderrama\Contacts\Downloads\music.mp3\_Soda Pop_ Official Lyric Video _ KPop Demon Hunters _ Sony Animation [983bBbJx0Mk].wav"
+RUTA_FONDO = r"C:\Users\yahir balderrama\Contacts\Downloads\music.mp3\kpop-demon-hunters-saja-boys-4k-wallpaper-uhdpaper.com-650@5@f.jpg"
+
+# ----------------------------
+# Clase Proceso
+# ----------------------------
+class Proceso:
+    def __init__(self, pid, nombre, tiempo):
+        self.pid = pid
+        self.nombre = nombre.upper()
+        self.tiempo = tiempo
+        self.estado = "Listo"
+
+    def __str__(self):
+        return f"PID: {self.pid} | {self.nombre:<12} | Tiempo: {self.tiempo:<3} | Estado: {self.estado}"
+
+# ----------------------------
+# Sistema Operativo
+# ----------------------------
+class SistemaOperativo:
+    def __init__(self):
+        self.procesos_lista = []
+        self.cola_listos = deque()
+        self.contador_pid = 1000
+        self.inicializar_multimedia()
+
+    def inicializar_multimedia(self):
+        """Carga la música y prepara la ventana de imagen de fondo."""
+        # Música con Pygame
+        try:
+            pygame.mixer.init()
+            pygame.mixer.music.load(RUTA_MUSICA)
+            pygame.mixer.music.play(-1)
+            print("[SISTEMA] Audio cargado correctamente.")
+        except:
+            print("[AVISO] No se pudo cargar el audio. Verifique la ruta.")
+
+        # Ventana de Imagen (Referencia visual)
+        def mostrar_banner():
+            try:
+                ventana_img = ctk.CTk()
+                ventana_img.title("SajaOS - Background")
+                ventana_img.geometry("400x300")
+                img = Image.open(RUTA_FONDO)
+                img = img.resize((400, 300))
+                photo = ImageTk.PhotoImage(img)
+                label = ctk.CTkLabel(ventana_img, image=photo, text="")
+                label.pack()
+                ventana_img.mainloop()
+            except: pass
+
+        threading.Thread(target=mostrar_banner, daemon=True).start()
+
+    def crear_proceso(self):
+        nombre = input("Nombre del proceso: ")
+        try:
+            tiempo = int(input("Tiempo de ejecución: "))
+        except: tiempo = random.randint(5, 10)
+
+        nuevo = Proceso(self.contador_pid, nombre, tiempo)
+        self.procesos_lista.append(nuevo)
+        self.cola_listos.append(nuevo)
+        self.contador_pid += 1
+        print(f"Proceso {nombre} creado.\n")
+
+    def mostrar_procesos(self):
+        print("\n" + "="*50)
+        for p in self.procesos_lista: print(p)
+        print("="*50 + "\n")
+
+    def ejecutar_fcfs(self):
+        print("\nEjecutando FCFS...")
+        while self.cola_listos:
+            p = self.cola_listos.popleft()
+            p.estado = "Ejecutando"
+            print(f"En CPU: {p.nombre}")
+            time.sleep(2)
+            p.tiempo = 0
+            p.estado = "Terminado"
+        print("FCFS Finalizado.\n")
+
+    def ejecutar_rr(self):
+        if not self.cola_listos: return
+        q = int(input("Ingresa el quantum: "))
+        print("\nIniciando Round Robin...")
+        while self.cola_listos:
+            p = self.cola_listos.popleft()
+            p.estado = "Ejecutando"
+            print(f"Ejecutando {p.nombre} por {min(p.tiempo, q)}s...")
+            time.sleep(1)
+            p.tiempo -= q
+            if p.tiempo > 0:
+                p.estado = "Listo"
+                self.cola_listos.append(p)
+            else:
+                p.estado = "Terminado"
+        print("Round Robin Finalizado.\n")
+
+    def menu(self):
+        while True:
+            print("==== SISTEMA OPERATIVO SODA POP ====")
+            print("1. Crear proceso | 2. Ver procesos | 3. FCFS | 4. Round Robin | 5. Salir")
+            opcion = input("Selecciona: ")
+            if opcion == "1": self.crear_proceso()
+            elif opcion == "2": self.mostrar_procesos()
+            elif opcion == "3": self.ejecutar_fcfs()
+            elif opcion == "4": self.ejecutar_rr()
+            elif opcion == "5": break
+
+if __name__ == "__main__":
+    sistema = SistemaOperativo()
+    sistema.menu()
