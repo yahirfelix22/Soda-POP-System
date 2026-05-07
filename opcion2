@@ -1,16 +1,3 @@
-import time
-import random
-import threading
-import pygame
-from collections import deque
-from PIL import Image, ImageTk
-import customtkinter as ctk
-
-# --- CONFIGURACIÓN DE RUTAS ---
-# Asegúrate de que estas rutas sean correctas en tu PC
-RUTA_MUSICA = r"C:\Users\yahir balderrama\Contacts\Downloads\music.mp3\_Soda Pop_ Official Lyric Video _ KPop Demon Hunters _ Sony Animation [983bBbJx0Mk].wav"
-RUTA_FONDO = r"C:\Users\yahir balderrama\Contacts\Downloads\music.mp3\kpop-demon-hunters-saja-boys-4k-wallpaper-uhdpaper.com-650@5@f.jpg"
-
 # ----------------------------
 # Clase Proceso
 # ----------------------------
